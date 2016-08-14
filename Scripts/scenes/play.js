@@ -7,36 +7,61 @@ var scenes;
 (function (scenes) {
     var Play = (function (_super) {
         __extends(Play, _super);
-        /**
-         * Creates an instance of Menu.
-         *
-         */
         function Play() {
             _super.call(this);
         }
-        /**
-         *
-         */
+        Play.prototype._updateScoreBoard = function () {
+            this._livesLabel.text = "Lives: " + core.lives;
+            this._scoreLabel.text = "Score: " + core.score;
+            if (core.score >= core.highScore) {
+                core.highScore = core.score;
+            }
+        };
+        Play.prototype.changeObstacle = function () {
+            if (!this.obstacle1.spawn) {
+                switch (Math.floor((Math.random() * 2))) {
+                    case 0:
+                        this.obstacle1.spawn = false;
+                        this.obstacle1 = new objects.Obstacle("obstacle1");
+                        this.addChild(this.obstacle1);
+                        core.stage.addChild(this);
+                        core.score += 100;
+                        break;
+                    case 1:
+                        this.obstacle1.spawn = false;
+                        this.obstacle1 = new objects.Obstacle("obstacle2");
+                        this.addChild(this.obstacle1);
+                        core.stage.addChild(this);
+                        core.score += 100;
+                        break;
+                }
+            }
+        };
         Play.prototype.Start = function () {
-            // Add Menu Label
-            this._playLabel = new objects.Label("PLAY SCENE", "60px", "Consolas", "#000000", 320, 240);
-            this.addChild(this._playLabel);
-            // add the start button
-            this._nextButton = new objects.Button("nextButton", 320, 420, true);
-            this.addChild(this._nextButton);
-            // Start button event listener
-            this._nextButton.on("click", this._startButtonClick, this);
-            // add this scene to the global scene container
+            this.background = new objects.Background("background");
+            this.addChild(this.background);
+            this.obstacle1 = new objects.Obstacle("obstacle1");
+            this.addChild(this.obstacle1);
+            this.player = new objects.Player("player");
+            this.addChild(this.player);
+            core.stage.on("click", this.clickMove, this);
+            this._collision = new managers.Collision();
+            this._livesLabel = new objects.Label("Lives: " + core.lives, "30px", "Consolas", "#000000", 10, 5, false);
+            this.addChild(this._livesLabel);
+            this._scoreLabel = new objects.Label("Score: " + core.score, "30px", "Consolas", "#000000", 450, 5, false);
+            this.addChild(this._scoreLabel);
             core.stage.addChild(this);
         };
         Play.prototype.Update = function () {
-            // scene updates happen here...
+            this.background.update();
+            this.obstacle1.update();
+            this.player.update();
+            this._collision.check(this.player, this.obstacle1);
+            this._updateScoreBoard();
+            this.changeObstacle();
         };
-        // EVENT HANDLERS ++++++++++++++++
-        Play.prototype._startButtonClick = function (event) {
-            // Switch the scene
-            core.scene = config.Scene.OVER;
-            core.changeScene();
+        Play.prototype.clickMove = function (event) {
+            this.player.changeY();
         };
         return Play;
     }(objects.Scene));

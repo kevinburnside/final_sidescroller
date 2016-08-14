@@ -7,34 +7,30 @@ var scenes;
 (function (scenes) {
     var Over = (function (_super) {
         __extends(Over, _super);
-        /**
-         * Creates an instance of Menu.
-         *
-         */
         function Over() {
             _super.call(this);
         }
-        /**
-         *
-         */
         Over.prototype.Start = function () {
-            // Add Menu Label
-            this._gameOverLabel = new objects.Label("GAME OVER", "60px", "Consolas", "#000000", 320, 240);
+            this._gameOverLabel = new objects.Label("GAME OVER", "60px", "Consolas", "#000000", 320, 240, true);
             this.addChild(this._gameOverLabel);
-            // add the start button
-            this._restartButton = new objects.Button("restartButton", 320, 420, true);
+            this._restartButton = new objects.Button("restartButton", 320, 400, true);
             this.addChild(this._restartButton);
-            // Start button event listener
             this._restartButton.on("click", this._restartButtonClick, this);
-            // add this scene to the global scene container
+            if (core.highScore <= core.score) {
+                this._highScore = new objects.Label("High Score: " + core.score, "60px", "Consolas", "#000000", 320, 100, true);
+            }
+            else {
+                console.log("true!");
+                this._highScore = new objects.Label("High Score: " + core.highScore, "60px", "Consolas", "#000000", 320, 100, true);
+            }
+            this.addChild(this._highScore);
             core.stage.addChild(this);
         };
         Over.prototype.Update = function () {
-            // scene updates happen here...
         };
-        // EVENT HANDLERS ++++++++++++++++
         Over.prototype._restartButtonClick = function (event) {
-            // Switch the scene
+            core.score = 0;
+            core.lives = 5;
             core.scene = config.Scene.PLAY;
             core.changeScene();
         };

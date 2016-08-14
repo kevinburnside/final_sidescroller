@@ -7,34 +7,20 @@ var scenes;
 (function (scenes) {
     var Menu = (function (_super) {
         __extends(Menu, _super);
-        /**
-         * Creates an instance of Menu.
-         *
-         */
         function Menu() {
             _super.call(this);
         }
-        /**
-         *
-         */
         Menu.prototype.Start = function () {
-            // Add Menu Label
-            this._menuLabel = new objects.Label("MENU SCENE", "60px", "Consolas", "#000000", 320, 240);
+            this._menuLabel = new objects.Label("MENU SCENE", "60px", "Consolas", "#000000", 320, 240, true);
             this.addChild(this._menuLabel);
-            // add the start button
             this._startButton = new objects.Button("startButton", 320, 420, true);
             this.addChild(this._startButton);
-            // Start button event listener
             this._startButton.on("click", this._startButtonClick, this);
-            // add this scene to the global scene container
             core.stage.addChild(this);
         };
         Menu.prototype.Update = function () {
-            // scene updates happen here...
         };
-        // EVENT HANDLERS ++++++++++++++++
         Menu.prototype._startButtonClick = function (event) {
-            // Switch the scene
             core.scene = config.Scene.PLAY;
             core.changeScene();
         };

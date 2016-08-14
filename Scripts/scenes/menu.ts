@@ -6,20 +6,20 @@ module scenes {
 
         /**
          * Creates an instance of Menu.
-         * 
+         *
          */
         constructor() {
             super();
         }
 
         /**
-         * 
+         *
          */
         public Start():void {
             // Add Menu Label
             this._menuLabel = new objects.Label(
                 "MENU SCENE", "60px","Consolas", "#000000",
-                320, 240
+                320, 240, true
                 );
             this.addChild(this._menuLabel);
 

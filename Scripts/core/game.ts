@@ -1,15 +1,5 @@
 /// <reference path="_reference.ts"/>
 
-/**
- * @author Tom Tsiliopoulos ttsliop@my.centennialcollege.ca
- * @studentID 300818577
- * @date July 11, 2016
- * @description This file is the entry point for the game
- * @version 0.1 - Initial version of the boilerplate
- */
-
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 namespace core {
 
     // Variable Declarations
@@ -25,6 +15,11 @@ namespace core {
 
     let startButton: objects.Button; // reference to our button class
 
+    // lives/score
+    export let score: number = 0;
+    export let lives: number = 5;
+    export let highScore: number = 0;
+
     // declare scene variables
     let currentScene: objects.Scene;
     export let scene: number;
@@ -33,19 +28,21 @@ namespace core {
     let over: scenes.Over;
     let play: scenes.Play;
 
-    
-
     // asset manifest for images and sounds
     let assetData:objects.Asset[] = [
         { id: "startButton", src: "../../Assets/images/startButton.png" },
         { id: "restartButton", src: "../../Assets/images/restartButton.png" },
         { id: "nextButton", src: "../../Assets/images/nextButton.png" },
-        { id: "exitButton", src: "../../Assets/images/exitButton.png" }
+        { id: "exitButton", src: "../../Assets/images/exitButton.png" },
+        { id: "background", src: "../../Assets/images/background.png"},
+        { id: "player", src:"../../Assets/images/player.png"},
+        { id: "obstacle1", src:"../../Assets/images/obstacle1.png"},
+        { id: "obstacle2", src:"../../Assets/images/obstacle2.png"}
     ];
 
     /**
      * This method preloads assets for the game
-     * 
+     *
      * @method preload
      * @returns {void}
      */
@@ -59,7 +56,7 @@ namespace core {
 
     /**
      * This method is the entry point for the application
-     * 
+     *
      * @method init
      * @return {void}
      */
@@ -76,7 +73,7 @@ namespace core {
 
     /**
      * This is the main game loop
-     * 
+     *
      * @method gameLoop
      * @param {createjs.Event} event
      * @returns {void}
@@ -91,7 +88,7 @@ namespace core {
 
     /**
      * This is the startButton click event handler
-     * 
+     *
      * @param {createjs.MouseEvent} event
      */
     function startButtonClick(event: createjs.MouseEvent) {

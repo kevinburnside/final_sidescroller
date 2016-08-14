@@ -5,24 +5,18 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var objects;
 (function (objects) {
-    /**
-     * This is a generic Label class for the Game BoilerPlate
-     *
-     * @export
-     * @class Label
-     * @extends {createjs.Text}
-     */
     var Label = (function (_super) {
         __extends(Label, _super);
-        function Label(labelString, fontSize, fontFamily, fontColour, x, y) {
+        function Label(labelString, fontSize, fontFamily, fontColour, x, y, isCentered) {
             _super.call(this, labelString, (fontSize + " " + fontFamily), fontColour);
             this.labelString = labelString;
             this.fontSize = fontSize;
             this.fontFamily = fontFamily;
             this.fontColour = fontColour;
-            this.regX = this.getMeasuredWidth() * 0.5;
-            this.regY = this.getMeasuredHeight() * 0.5;
-            // assign label coordinates
+            if (isCentered) {
+                this.regX = this.getMeasuredWidth() * 0.5;
+                this.regY = this.getMeasuredHeight() * 0.5;
+            }
             this.x = x;
             this.y = y;
         }
