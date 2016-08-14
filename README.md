@@ -1,1 +1,1 @@
-# COMP397-S2016-BoilerPlate for Centennial College
+# COMP397-S2016 FINAL PROJECT
